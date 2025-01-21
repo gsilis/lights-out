@@ -41,6 +41,7 @@ class SequenceEmitter {
   }
 
   onInterval = () => {
+    const oldValue = this.steps[this.index];
     const nextValue = this.steps[++this.index];
     const indexOutOfBounds = this.steps.length <= this.index;
 
@@ -51,7 +52,7 @@ class SequenceEmitter {
       return;
     }
 
-    this.tickNotifiers.forEach(fn => fn.call(void 0, nextValue, this));
+    this.tickNotifiers.forEach(fn => fn.call(void 0, nextValue, oldValue, this));
   }
 
   removeNotifier(fn) {

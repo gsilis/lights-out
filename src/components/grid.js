@@ -6,6 +6,7 @@ class Grid {
   elements = [];
 
   constructor(stage, width, height) {
+    this.dispatcher = new EventTarget();
     this.stage = stage;
     this.width = width;
     this.height = height;
@@ -21,7 +22,7 @@ class Grid {
       for (let w = 0; w < this.width; w++) {
         const point = PointPool.pointFor(w, h);
         const button = new Button(this.stage, point);
-        button.addEventListener('CLICK', this.onClick);
+        button.addEventListener('CLICK', this.onSelect);
 
         y[w] = button;
         this.elements.push(button);
@@ -32,16 +33,10 @@ class Grid {
     }
   }
 
-  onClick = (event) => {
+  onSelect = (event) => {
     const point = event.detail.point;
-
-    [
-      point,
-      PointPool.pointFor(point.x, point.y - 1),
-      PointPool.pointFor(point.x, point.y + 1),
-      PointPool.pointFor(point.x - 1, point.y),
-      PointPool.pointFor(point.x + 1, point.y)
-    ].forEach(this.toggle);
+    const recastEvent = new CustomEvent('SELECT', { detail: { point } });
+    this.dispatcher.dispatchEvent(recastEvent);
   }
 
   toggle = (point) => {
@@ -53,7 +48,8 @@ class Grid {
     return (this.buttons[y] && this.buttons[y][x]) || this.nullButton;
   }
 
-  setState = (data) => {
+
+  applyData = (data) => {
     for (let h = 0; h < data.length; h++) {
       for(let w = 0; w < data[h].length; w++) {
         this.buttons.on = data[h][w];
@@ -61,11 +57,11 @@ class Grid {
     }
   }
 
-  clear() {
+  clear = () => {
     this.elements.forEach(e => e.on = false);
   }
 
-  checked() {
+  checked = () => {
     this.elements.reduce((c, e) => {
       if (e.on) {
         c + 1;
@@ -74,6 +70,9 @@ class Grid {
       return c;
     }, 0);
   }
+
+  addEventListener = (...args) => this.dispatcher.addEventListener(...args)
+  removeEventListener = (...args) => this.dispatcher.removeEventListener(...args)
 }
 
 export default Grid;

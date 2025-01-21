@@ -42,7 +42,7 @@ class Button {
   }
 
   click = () => {
-    const event = new CustomEvent('CLICK', { detail: { point: this._point, on: this._on }});
+    const event = new CustomEvent('CLICK', { detail: { point: this._point }});
     this.dispatcher.dispatchEvent(event);
   }
 
