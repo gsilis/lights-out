@@ -8,15 +8,11 @@ const x = [
   PointPool.pointFor(4, 4),
   PointPool.pointFor(4, 0),
   PointPool.pointFor(3, 1),
-  PointPool.pointFor(1, 0),
+  PointPool.pointFor(1, 3),
+  PointPool.pointFor(0, 4),
 ];
 
 const sequence = [
-  x, x,
-  x, x,
-  x, x,
-  x, x,
-  x, x,
   x, x,
   x, x,
   x, x

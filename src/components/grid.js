@@ -48,13 +48,9 @@ class Grid {
     return (this.buttons[y] && this.buttons[y][x]) || this.nullButton;
   }
 
-
-  applyData = (data) => {
-    for (let h = 0; h < data.length; h++) {
-      for(let w = 0; w < data[h].length; w++) {
-        this.buttons.on = data[h][w];
-      }
-    }
+  applyData = (points) => {
+    this.clear();
+    points.forEach(p => this.toggle(p));
   }
 
   clear = () => {
@@ -62,9 +58,9 @@ class Grid {
   }
 
   checked = () => {
-    this.elements.reduce((c, e) => {
+    return this.elements.reduce((c, e) => {
       if (e.on) {
-        c + 1;
+        return c + 1;
       }
 
       return c;

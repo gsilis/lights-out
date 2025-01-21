@@ -15,13 +15,19 @@ class Game {
     this.stateFactory = new StateFactory(this.setState, this.grid, this.session);
     this.grid.setup();
     this.grid.addEventListener('SELECT', this.onSelect);
+    this.domSelect.addEventListener('click', this.onLevelSelect);
+    this.domReset.addEventListener('click', this.onReset);
 
     this.setState(this.stateFactory.create(State.SPIRAL_ANIMATION));
   }
 
-  onReset = () => {}
+  onReset = () => {
+    this.setState(this.stateFactory.create(State.PLAY));
+  }
 
-  onLevelSelect = () => {}
+  onLevelSelect = () => {
+    this.setState(this.stateFactory.create(State.LEVEL_SELECT));
+  }
 
   setState = (newState) => {
     this.state && this.state.teardown();
