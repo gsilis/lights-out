@@ -1,6 +1,8 @@
 class BaseState {
-  constructor(setState, grid, session, stateFactory) {
+  constructor(setState, pushState, popState, grid, session, stateFactory) {
     this.setState = setState;
+    this.pushState = pushState;
+    this.popState = popState;
     this.grid = grid;
     this.session = session;
     this.stateFactory = stateFactory;
@@ -8,7 +10,12 @@ class BaseState {
 
   setup() {}
   onSelect(_) {}
+  onHint() {}
+  onReset() {}
   teardown() {}
+  pause() {}
+  resume() {}
+  withOptions() {}
 }
 
 export default BaseState;

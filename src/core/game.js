@@ -3,26 +3,26 @@ import Settings from '../config';
 import StateFactory from "./state-factory";
 import State from "./state";
 import Session from "./session";
+import wrappedElementAt from "../utilities/array/wrap-index";
 
 class Game {
-  constructor(domGrid, domSelect, domReset) {
+  constructor(domGrid, domSelect, domReset, domHint) {
+    this.state = [];
     this.session = new Session();
     this.domGrid = domGrid;
     this.domSelect = domSelect;
     this.domReset = domReset;
+    this.domHint = domHint;
     this.grid = new Grid(this.domGrid, Settings.WIDTH, Settings.HEIGHT);
     
-    this.stateFactory = new StateFactory(this.setState, this.grid, this.session);
+    this.stateFactory = new StateFactory(this.setState, this.pushState, this.popState, this.grid, this.session);
     this.grid.setup();
     this.grid.addEventListener('SELECT', this.onSelect);
     this.domSelect.addEventListener('click', this.onLevelSelect);
     this.domReset.addEventListener('click', this.onReset);
+    this.domHint.addEventListener('click', this.onHint);
 
     this.setState(this.stateFactory.create(State.SPIRAL_ANIMATION));
-  }
-
-  onReset = () => {
-    this.setState(this.stateFactory.create(State.PLAY));
   }
 
   onLevelSelect = () => {
@@ -30,12 +30,61 @@ class Game {
   }
 
   setState = (newState) => {
-    this.state && this.state.teardown();
-    this.state = newState;
-    this.state.setup();
+    const oldState = this.state.pop();
+
+    if (oldState) {
+      oldState.teardown();
+    }
+
+    newState.setup();
+    this.state.push(newState);
   }
 
-  onSelect = (...args) => this.state.onSelect.call(this.state, ...args)
+  pushState = (newState) => {
+    const oldState = wrappedElementAt(this.state, -1);
+
+    if (oldState) {
+      oldState.pause.call(oldState);
+    }
+
+    newState.setup();
+    this.state.push(newState);
+  }
+
+  popState = () => {
+    const oldState = this.state.pop();
+    const resumeState = wrappedElementAt(this.state, -1);
+
+    if (oldState) {
+      oldState.teardown.call(oldState);
+    }
+
+    if (resumeState) {
+      resumeState.resume.call(resumeState);
+    }
+  }
+
+  getLatestState = () => {
+    return wrappedElementAt(this.state, -1);
+  }
+
+  onSelect = (...args) => {
+    const state = this.getLatestState();
+
+    return state.onSelect.call(state, ...args);
+  }
+
+  onHint = (...args) => {
+    const state = this.getLatestState();
+
+    return state.onHint.call(state, ...args);
+  }
+
+  onReset = (...args) => {
+    const state = this.getLatestState();
+
+    return state.onReset.call(state, ...args);
+  }
 }
 
 export default Game;

@@ -57,14 +57,16 @@ class Grid {
     this.elements.forEach(e => e.on = false);
   }
 
-  checked = () => {
-    return this.elements.reduce((c, e) => {
-      if (e.on) {
-        return c + 1;
-      }
+  checkedPoints = () => {
+    this.checked().map(b => b.point);
+  }
 
-      return c;
-    }, 0);
+  checked = () => {
+    return this.elements.filter(b => b.on);
+  }
+
+  checkedCount = () => {
+    return this.checked().length;
   }
 
   addEventListener = (...args) => this.dispatcher.addEventListener(...args)

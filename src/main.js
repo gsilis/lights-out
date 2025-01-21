@@ -4,9 +4,10 @@ import "./style.css";
 function setup() {
   const reset = document.getElementById('game-reset');
   const select = document.getElementById('game-select');
+  const hint = document.getElementById('game-hint');
   const grid = document.querySelector('#app .grid');
 
-  const game = new Game(grid, select, reset);
+  const game = new Game(grid, select, reset, hint);
 }
 
 document.addEventListener('DOMContentLoaded', function onLoad() {

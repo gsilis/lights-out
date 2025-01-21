@@ -37,6 +37,19 @@ class LevelSelect extends BaseState {
   teardown() {
     this.grid.clear();
   }
+
+  resume() {
+    this.grid.clear();
+    this.grid.applyData(this.points);
+  }
+
+  onHint() {
+    this.pushState(this.stateFactory.create(State.ERROR_ANIMATION));
+  }
+
+  onReset() {
+    this.pushState(this.stateFactory.create(State.ERROR_ANIMATION));
+  }
 }
 
 export default LevelSelect;

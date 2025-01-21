@@ -37,6 +37,10 @@ class Button {
     }
   }
 
+  get point() {
+    return this._point;
+  }
+
   toggle = () => {
     this.on = !this.on;
   }

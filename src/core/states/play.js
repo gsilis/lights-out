@@ -7,6 +7,7 @@ import wrappedElementAt from "../../utilities/array/wrap-index";
 class Play extends BaseState {
   rightMoves = [];
   wrongMoves = [];
+  snapshot = [];
 
   setup() {
     const level = this.session.level.getCurrentValue();
@@ -36,13 +37,35 @@ class Play extends BaseState {
       PointPool.pointFor(point.x + 1, point.y)
     ].forEach(this.grid.toggle);
 
-    const remaining = this.grid.checked();
+    const remaining = this.grid.checkedCount();
 
     if (remaining === 0) {
       this.grid.clear();
       this.session.level.update(this.session.level.getCurrentValue() + 1);
       this.setState(this.stateFactory.create(State.LEVEL_SELECT_ANIMATION));
     }
+  }
+
+  onReset() {
+    this.setState(this.stateFactory.create(State.PLAY));
+  }
+
+  onHint() {
+    this.setState(this.stateFactory.create(
+      State.HINT,
+      this.grid.checkedPoints(),
+      this.moves,
+      this.rightMoves,
+      this.wrongMoves
+    ));
+  }
+
+  pause() {
+    this.snapshot = this.grid.checkedPoints();
+  }
+
+  resume() {
+    this.grid.applyData(this.snapshot);
   }
 }
 
