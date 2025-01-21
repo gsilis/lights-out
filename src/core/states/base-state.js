@@ -1,7 +1,9 @@
 class BaseState {
-  constructor(setState, grid) {
+  constructor(setState, grid, session, stateFactory) {
     this.setState = setState;
     this.grid = grid;
+    this.session = session;
+    this.stateFactory = stateFactory;
   }
 
   setup() {}

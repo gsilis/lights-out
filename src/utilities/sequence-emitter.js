@@ -1,4 +1,8 @@
 class SequenceEmitter {
+  static create(stepDurationMS) {
+    return new SequenceEmitter(stepDurationMS);
+  }
+
   steps = [];
   tickNotifiers = [];
   completionNotifiers = [];
@@ -29,15 +33,21 @@ class SequenceEmitter {
 
   run() {
     this.interval = setInterval(this.onInterval, this.stepDurationMS);
+    
+    return this;
   }
 
   pause() {
     clearInterval(this.interval);
     this.interval = null;
+
+    return this;
   }
 
   reset() {
     this.currentIndex = -1;
+
+    return this;
   }
 
   onInterval = () => {
