@@ -1,7 +1,7 @@
 import PointPool from "../core/point-pool";
 import Level from "./level";
 
-const level2 = new Level([
+const level = new Level([
   PointPool.pointFor(0, 2),
   PointPool.pointFor(2, 2),
   PointPool.pointFor(4, 2)
@@ -14,4 +14,4 @@ const level2 = new Level([
   PointPool.pointFor(4, 4)
 ]);
 
-export default level2;
+export default level;

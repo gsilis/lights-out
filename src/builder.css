@@ -70,3 +70,26 @@ h1 {
   padding: 15px;
   flex: 1;
 }
+
+.puzzles {
+  padding: 15px 15px;
+}
+
+.puzzles builder-game-tile {
+  display: inline-block;
+  width: 126px;
+  background: lightgray;
+  border: 1px solid darkgray;
+  box-sizing: border-box;
+  margin: 5px;
+}
+
+.puzzles builder-game-tile:hover {
+  background-color: rgba(230, 230, 230);
+  cursor: pointer;
+}
+
+.puzzles builder-game-tile.active {
+  background: lightyellow;
+  border: 1px solid yellow;
+}

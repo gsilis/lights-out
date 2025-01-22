@@ -1,4 +1,3 @@
-import Button from "../components/button";
 import PointPool from "../core/point-pool";
 
 class Grid {
