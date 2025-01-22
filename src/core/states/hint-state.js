@@ -24,13 +24,14 @@ class HintState extends BaseState {
     this.grid.clear();
     this.grid.applyData(this.snapshot);
     this.sequence = SequenceEmitter.create(200)
-      .addSteps(move, move, move, move)
+      .addSteps(move, move, move, move, move, move)
       .tick((point) => {
         this.grid.toggle(point);
       })
       .done(() => {
         this.popState();
-      });
+      })
+      .run();
   }
 
   onSelect() {

@@ -51,10 +51,10 @@ class Play extends BaseState {
   }
 
   onHint() {
-    this.setState(this.stateFactory.create(
+    this.pushState(this.stateFactory.create(
       State.HINT,
       this.grid.checkedPoints(),
-      this.moves,
+      this.levelData.moves,
       this.rightMoves,
       this.wrongMoves
     ));
@@ -65,6 +65,7 @@ class Play extends BaseState {
   }
 
   resume() {
+    this.grid.clear();
     this.grid.applyData(this.snapshot);
   }
 }

@@ -9,23 +9,24 @@ class LevelSelect extends BaseState {
     const indexOfPoint = this.points.indexOf(point);
 
     if (indexOfPoint < 0) {
-      this.setState(this.stateFactory.create(State.ERROR_ANIMATION));
+      this.pushState(this.stateFactory.create(State.ERROR_ANIMATION));
       return;
     }
 
-    this.session.maxLevel.update(indexOfPoint);
+    this.session.level.update(indexOfPoint);
     this.setState(this.stateFactory.create(State.PLAY));
   }
 
   setup() {
-    let level = this.session.level.getCurrentValue();
+    const level = this.session.maxLevel.getCurrentValue();
+    let currentLevel = 0;
     this.points = [];
 
-    while (level >= 0) {
-      const x = level % Settings.WIDTH;
-      const y = Math.floor(level / Settings.WIDTH);
+    while (currentLevel <= level) {
+      const x = currentLevel % Settings.WIDTH;
+      const y = Math.floor(currentLevel / Settings.WIDTH);
       this.points.push(PointPool.pointFor(x, y));
-      level--;
+      currentLevel++;
     }
 
     this.grid.clear();

@@ -11,6 +11,7 @@ class Grid {
     this.width = width;
     this.height = height;
     this.nullButton = new Button(document.createElement('div'), PointPool.pointFor(-1, -1));
+    window.grid = this;
   }
 
   setup() {
@@ -25,7 +26,6 @@ class Grid {
         button.addEventListener('CLICK', this.onSelect);
 
         y[w] = button;
-        this.elements.push(button);
         this.elements.push(button);
       }
 
@@ -58,7 +58,7 @@ class Grid {
   }
 
   checkedPoints = () => {
-    this.checked().map(b => b.point);
+    return this.checked().map(b => b.point);
   }
 
   checked = () => {

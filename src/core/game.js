@@ -9,6 +9,7 @@ class Game {
   constructor(domGrid, domSelect, domReset, domHint) {
     this.state = [];
     this.session = new Session();
+    this.session.setup();
     this.domGrid = domGrid;
     this.domSelect = domSelect;
     this.domReset = domReset;
