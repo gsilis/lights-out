@@ -4,6 +4,7 @@ import StateFactory from "./state-factory";
 import State from "./state";
 import Session from "./session";
 import wrappedElementAt from "../utilities/array/wrap-index";
+import ButtonFactory from "./button-factory";
 
 class Game {
   constructor(domGrid, domSelect, domReset, domHint) {
@@ -14,7 +15,8 @@ class Game {
     this.domSelect = domSelect;
     this.domReset = domReset;
     this.domHint = domHint;
-    this.grid = new Grid(this.domGrid, Settings.WIDTH, Settings.HEIGHT);
+    this.buttonFactory = new ButtonFactory(this.domGrid);
+    this.grid = new Grid(Settings.WIDTH, Settings.HEIGHT, this.buttonFactory);
     
     this.stateFactory = new StateFactory(this.setState, this.pushState, this.popState, this.grid, this.session);
     this.grid.setup();

@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lights Out Builder</title>
+  </head>
+  <body>
+    <div id="app">
+      <h1>Lights Out Builder</h1>
+      <div class="controls">
+        <input type="number" id="moves" />
+        <button id="generate">Generate</button>
+      </div>
+      <div class="puzzles"></div>
+      <div class="data">
+        <pre id="puzzle-output"></pre>
+        <div class="data-controls">
+          <button id="copy-code">Copy Code</button>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="/src/builder.js"></script>
+  </body>
+</html>

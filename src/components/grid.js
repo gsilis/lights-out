@@ -5,12 +5,12 @@ class Grid {
   buttons = [];
   elements = [];
 
-  constructor(stage, width, height) {
+  constructor(width, height, buttonFactory) {
     this.dispatcher = new EventTarget();
-    this.stage = stage;
+    this.buttonFactory = buttonFactory;
     this.width = width;
     this.height = height;
-    this.nullButton = new Button(document.createElement('div'), PointPool.pointFor(-1, -1));
+    this.nullButton = this.buttonFactory.createNull();
     window.grid = this;
   }
 
@@ -22,7 +22,7 @@ class Grid {
 
       for (let w = 0; w < this.width; w++) {
         const point = PointPool.pointFor(w, h);
-        const button = new Button(this.stage, point);
+        const button = this.buttonFactory.create(point);
         button.addEventListener('CLICK', this.onSelect);
 
         y[w] = button;
