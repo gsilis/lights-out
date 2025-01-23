@@ -46,19 +46,32 @@ class BuilderGame {
   }
 
   setDetail = (detail) => {
-    const before = `import PointPool from "../core/point-pool";\nimport Level from "./level";\n\nconst level  = new Level({\n`;
+    const before = `import PointPool from "../core/point-pool";\nimport Level from "./level";\n\nconst level  = new Level([\n`;
     const between = `], [\n`;
     const after = `]);\n\nexport default level;`;
     const points = detail.points.reduce((b, p) => {
-      b += `  PointerPool.pointFor(${p.x}, ${p.y}),\n`;
+      b += `  PointPool.pointFor(${p.x}, ${p.y}),\n`;
       return b;
     }, '');
     const moves = detail.moves.reduce((b, p) => {
-      b += `  PointerPool.pointFor(${p.x}, ${p.y}),\n`;
+      b += `  PointPool.pointFor(${p.x}, ${p.y}),\n`;
       return b;
     }, '');
 
     this.output.innerText = `${before}${points}${between}${moves}${after}`;
+  }
+
+  copy = () => {
+    const data = this.output.innerText;
+    const type = 'text/plain';
+    const blob = new Blob([data], { type });
+    const clipboardItem = [new ClipboardItem({ [type]: blob })];
+
+    navigator.clipboard.write(clipboardItem).then((d) => {
+      console.log('Clipboard', d);
+    }).catch((e) => {
+      console.error(e);
+    });
   }
 
   onSelect = (event) => {

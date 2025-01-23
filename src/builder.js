@@ -15,7 +15,7 @@ function setup() {
   });
 
   copyCode.addEventListener('click', () => {
-
+    builder.copy();
   });
 }
 
