@@ -11,6 +11,10 @@ class Point {
 
   get x() { return this._x; }
   get y() { return this._y; }
+
+  compare(point) {
+    return point.x == this.x && point.y == this.y;
+  }
 }
 
 export default Point;

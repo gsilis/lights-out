@@ -11,7 +11,7 @@ class BuilderGameTile extends HTMLElement {
       <style>
         :host {
           padding: 10px;
-          font-size: 12px;
+          font-size: 14px;
         }
 
         .grid {
@@ -31,9 +31,22 @@ class BuilderGameTile extends HTMLElement {
         .grid .tile.active {
           background-color: darksalmon;
         }
+
+        .status {
+          background-color: green;
+          border-radius: 10px;
+          display: inline-block;
+          width: 10px;
+          height: 10px;
+        }
+
+        .status.repetitious {
+          background-color: red;
+        }
       </style>
       <div class="grid"></div>
       <p>
+        <span class="status"></span>
         <span>Moves </span>
         <span data-id="moves"></span>
         <button id="delete">Delete</button>
@@ -42,6 +55,7 @@ class BuilderGameTile extends HTMLElement {
     this.moves = this.dom.querySelector('span[data-id="moves"]');
     this.grid = this.dom.querySelector('.grid');
     this.delete = this.dom.querySelector('button#delete');
+    this.status = this.dom.querySelector('.status');
 
     for (let y = 0; y < Settings.HEIGHT; y++) {
       for (let x = 0; x < Settings.WIDTH; x++) {
@@ -75,6 +89,10 @@ class BuilderGameTile extends HTMLElement {
       const node = this.nodeAt(m);
       if (node) node.classList.add('active');
     });
+    console.log(data, data.isRepetitious());
+    if (data.isRepetitious()) {
+      this.status.classList.add('repetitious');
+    }
   }
 
   getData = () => {
